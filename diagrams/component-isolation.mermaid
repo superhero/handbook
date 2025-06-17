@@ -1,0 +1,43 @@
+---
+
+config:
+    layout: elk
+    look: classic
+    theme: base
+    themeVariables:
+        fontFamily: "monospace"
+        background: "#3C3836"
+        primaryColor: "#1D2021"
+        primaryTextColor: "#EBDBB2"
+        primaryBorderColor: "#282828"
+        lineColor: "#D65D0E"
+
+---
+
+classDiagram
+    direction TB
+
+namespace Infrastructure {
+    class Adapter {
+        + operation(value): Entity
+    }
+
+    class Component {
+        + foo(input): output
+    }
+}
+
+namespace Application {
+    class ApplicationService {
+        - port: Contract
+    }
+
+    class Contract {
+        <<Interface>>
+        + operation(value): Entity
+    }
+}
+
+ApplicationService --> Contract
+Adapter ..o Contract
+Adapter --> Component

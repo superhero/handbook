@@ -1,0 +1,131 @@
+---
+
+config:
+    layout: elk
+    look: classic
+    theme: base
+    themeVariables:
+        fontFamily: "monospace"
+        lineColor: "#D65D0E"
+
+---
+
+flowchart TB
+    subgraph Subdomains["_Subdomains_"]
+        subgraph Core["_Core Domain_<br>_Bounded-Context_"]
+            subgraph Infrastructure["_Infrastructure_"]
+                subgraph InfrastructureQuery["_Query_"]
+                    subgraph InfrastructureQueryUpstream["_Upstream_<br>_Controller_"]
+                        InfrastructureQueryUpstreamAdapter[Adapter]
+                    end
+
+                    subgraph InfrastructureQueryDownstream["_Downstream_<br>_Repository_"]
+                        InfrastructureQueryDownstreamAdapter[Adapter]
+                    end
+                end
+
+                subgraph InfrastructureCommand["_Command_"]
+                    subgraph InfrastructureCommandUpstream["_Upstream_<br>_Controller_"]
+                        InfrastructureCommandUpstreamAdapter[Adapter]
+                    end
+
+                    subgraph InfrastructureCommandDownstream["_Downstream_<br>_Repository_"]
+                        InfrastructureCommandDownstreamAdapter[Adapter]
+                    end
+                end
+            end
+
+            subgraph Application["_Application<br>Orchestration_"]
+                subgraph ApplicationQuery["_Query_"]
+                    subgraph QueryApplicationService["_Application Service_"]
+                        Resolver:::implementation
+                    end
+
+                    subgraph ApplicationQueryContract["_Contract_"]
+                        subgraph ApplicationQueryContractUpstream["_Upstream_<br>_Controller_"]
+                            ApplicationQueryContractUpstreamInterface[Interface]
+                        end
+
+                        subgraph ApplicationQueryContractDownstream["_Downstream_<br>_Repository_"]
+                            ApplicationQueryContractDownstreamInterface[Interface]
+                        end
+                    end
+                end
+
+                subgraph ApplicationCommand["_Command_"]
+                    subgraph CommandApplicationService["_Application Service_"]
+                        Interactor[Interactor]:::implementation
+                    end
+
+                    subgraph ApplicationCommandProcess["_Process Manager_"]
+                        ApplicationCommandProcessSaga[Saga]
+                    end
+
+                    subgraph ApplicationCommandContract["_Contract_"]
+                        subgraph ApplicationCommandContractUpstream["_Upstream_<br>_Controller_"]
+                            ApplicationCommandContractUpstreamInterface[Interface]
+                        end
+
+                        subgraph ApplicationCommandContractDownstream["_Downstream_<br>_Repository_"]
+                            ApplicationCommandContractDownstreamInterface[Interface]
+                        end
+                    end
+                end
+            end
+
+            subgraph Domain[_Domain_]
+                DomainAggregate[Aggregate] --> DomainSchema
+                subgraph DomainSchema[_Schema_]
+                    DomainEntity[Entity] --> DomainValueObject[Value Object]
+                end
+            end
+
+            CommandApplicationService   --> ApplicationCommandContract
+            QueryApplicationService     --> ApplicationQueryContract
+
+            InfrastructureCommandDownstream -.-o ApplicationCommandContractDownstream
+            InfrastructureCommandUpstream   -.-o ApplicationCommandContractUpstream
+            InfrastructureQueryDownstream   -.-o ApplicationQueryContractDownstream
+            InfrastructureQueryUpstream     -.-o ApplicationQueryContractUpstream
+
+            ApplicationCommandProcess   --> ApplicationCommandContractDownstream
+            ApplicationQueryContract    --> Domain
+            ApplicationCommandContract  --> Domain
+        end
+
+        subgraph SubdomainsGroup["░░░░░░░░░░░░░░░░░"]
+            subgraph SupportingSubdomains["_Supporting Subdomains_"]
+                SupportingSubDomainsBoundedContexts["Other Bounded-Contexts"]
+            end
+
+            subgraph GenericSubdomains[_Generic Subdomains_]
+                GenericSubdomainsBoundedContexts[Other Bounded-Contexts]
+            end
+        end
+
+        InfrastructureQueryDownstream   --> SubdomainsGroup
+        InfrastructureCommandDownstream --> SubdomainsGroup
+        InfrastructureQueryDownstream   --> SubdomainsGroup
+        InfrastructureCommandDownstream --> SubdomainsGroup
+        SupportingSubdomains            --> GenericSubdomains
+    end
+
+    classDef nsDepth_1 fill:#1D2021,stroke:#1D2021,color:#7C6F64
+    classDef nsDepth_2 fill:#282828,stroke:#282828,color:#7C6F64,stroke-width:6px
+    classDef nsDepth_3 fill:#3C3836,stroke:#3C3836,color:#7C6F64,stroke-width:12px
+    classDef nsDepth_4 fill:#504945,stroke:#504945,color:#1D2021
+    classDef nsDepth_5 fill:#665C54,stroke:#665C54,color:#1D2021,stroke-width:8px
+    classDef nsDepth_6 fill:#7C6F64,stroke:#7C6F64,color:#1D2021,stroke-width:16px
+    
+    classDef implementation fill:#1D2021,stroke:#282828,font-weight:bold,stroke-width:8px,color:#EBDBB2
+    classDef contract fill:#EBDBB2,stroke:#A89984,font-weight:bold,stroke-width:8px,color:#665C54
+
+    class Subdomains,SubdomainsGroup nsDepth_1
+    class Core,SupportingSubdomains,GenericSubdomains nsDepth_2
+    class Infrastructure,Application,Domain,SupportingSubDomainsBoundedContexts,GenericSubdomainsBoundedContexts nsDepth_3
+    class DomainSchema,InfrastructureQuery,InfrastructureCommand,ApplicationQuery,ApplicationCommand nsDepth_4
+    class InfrastructureCommandDownstream,InfrastructureCommandUpstream,InfrastructureQueryDownstream,InfrastructureQueryUpstream,ApplicationQueryContract,ApplicationCommandProcess,ApplicationCommandContract,CommandApplicationService,QueryApplicationService nsDepth_5
+    class ApplicationQueryContractUpstream,ApplicationQueryContractDownstream,ApplicationCommandContractUpstream,ApplicationCommandContractDownstream nsDepth_6
+    
+    class DomainEntity,DomainValueObject,ApplicationQueryContractUpstreamInterface,ApplicationQueryContractDownstreamInterface,ApplicationCommandContractUpstreamInterface,ApplicationCommandContractDownstreamInterface contract
+    class InfrastructureQueryUpstreamAdapter,InfrastructureQueryDownstreamAdapter,InfrastructureCommandUpstreamAdapter,InfrastructureCommandDownstreamAdapter,ApplicationCommandProcessSaga,DomainAggregate implementation

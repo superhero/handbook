@@ -1,0 +1,81 @@
+---
+
+config:
+    layout: elk
+    look: classic
+    theme: base
+    themeVariables:
+        fontFamily: "monospace"
+        lineColor: "#D65D0E"
+
+---
+
+flowchart TB
+    subgraph Subdomains["_Subdomains_"]
+        subgraph ImplementedBoundedContext["_Bounded-Context_"]
+            subgraph Infrastructure["_Infrastructure_"]
+                subgraph Controller["_Upstream Controller Adapter_"]
+                    subgraph ControllerACL["_Anti-Corruption Layer<br>Context Mapping_"]
+                        subgraph UpstreamControllerContextMapper["_Upstream_"]
+                            UpstreamControllerRequest[DTO<br>Request] --> UpstreamControllerSchema["Command<br>or<br>Query"]
+                        end
+
+                        subgraph DownstreamControllerContextMapper["_Downstream_"]
+                            direction BT
+                            DownstreamControllerSchema["Entity<br>or<br>Value Object"] --> DownstreamResponse[DTO<br>Response]
+                        end
+
+                        ControllerGateway[Gateway]          --> UpstreamControllerContextMapper
+                        UpstreamControllerContextMapper     --> ControllerContract[Contract]
+                        DownstreamControllerContextMapper   ~~~ ControllerContract
+                        ControllerGateway                   ~~~ DownstreamControllerContextMapper
+                        ControllerContract                  --> DownstreamControllerContextMapper
+                        DownstreamControllerContextMapper   --> ControllerGateway
+                    end
+                end
+
+                subgraph Repository["_Downstream Repository Adapter_"]
+                    subgraph RepositoryACL["_Anti-Corruption Layer<br>Context Mapping_"]
+                        subgraph UpstreamRepositoryContextMapper["_Upstream_"]
+                            direction BT
+                            UpstreamRepositoryDTO[DTO<br>Output] --> UpstreamRepositorySchema["Entity<br>or<br>Value Object"]
+                        end
+
+                        subgraph DownstreamRepositoryContextMapper["_Downstream_"]
+                            DownstreamRepositorySchema["Entity<br>or<br>Value Object"] --> DownstreamRepositoryDTO[DTO<br>Input]
+                        end
+                        
+                        DownstreamRepositoryContextMapper   --> RepositoryGateway[Gateway]
+                        RepositoryContract[Contract]        --> DownstreamRepositoryContextMapper
+                        RepositoryContract                  ~~~ UpstreamRepositoryContextMapper
+                        UpstreamRepositoryContextMapper     ~~~ RepositoryGateway
+                        UpstreamRepositoryContextMapper     --> RepositoryContract
+                        RepositoryGateway                   --> UpstreamRepositoryContextMapper
+                    end
+                end
+            end
+        end
+
+        ControllerBoundedContext["_Bounded-Context<br>Upstream_"] <--> ControllerGateway
+        RepositoryGateway <--> RepositoryBoundedContext["_Bounded-Context<br>Downstream_"]
+    end
+
+    classDef nsDepth_1 fill:#1D2021,stroke:#1D2021,color:#7C6F64
+    classDef nsDepth_2 fill:#282828,stroke:#282828,color:#7C6F64,stroke-width:6px
+    classDef nsDepth_3 fill:#3C3836,stroke:#3C3836,color:#7C6F64,stroke-width:12px
+    classDef nsDepth_4 fill:#504945,stroke:#504945,color:#1D2021
+    classDef nsDepth_5 fill:#665C54,stroke:#665C54,color:#1D2021,stroke-width:8px
+    classDef nsDepth_6 fill:#7C6F64,stroke:#7C6F64,color:#1D2021,stroke-width:16px
+    
+    classDef implementation fill:#1D2021,stroke:#282828,font-weight:bold,stroke-width:8px,color:#EBDBB2
+    classDef contract fill:#EBDBB2,stroke:#A89984,font-weight:bold,stroke-width:8px,color:#665C54
+
+    class Subdomains nsDepth_1
+    class ImplementedBoundedContext,ControllerBoundedContext,RepositoryBoundedContext nsDepth_2
+    class Infrastructure nsDepth_3
+    class Controller,Repository nsDepth_4
+    class ControllerACL,RepositoryACL nsDepth_5
+    class UpstreamControllerContextMapper,DownstreamControllerContextMapper,UpstreamRepositoryContextMapper,DownstreamRepositoryContextMapper nsDepth_6
+    
+    class UpstreamControllerRequest,DownstreamResponse,DownstreamControllerSchema,UpstreamControllerSchema,RepositoryContract,ControllerContract,UpstreamRepositoryDTO,UpstreamRepositorySchema,DownstreamRepositoryDTO,DownstreamRepositorySchema contract
+    class RepositoryGateway,RepositoryMapper,RepositoryGuard,ControllerMapper,ControllerGateway,ControllerAdapter,RepositoryAdapter implementation
