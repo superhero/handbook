@@ -1,0 +1,138 @@
+---
+
+config:
+    layout: elk
+    look: classic
+    theme: base
+    themeVariables:
+        background: "#1D2021"
+        fontFamily: "monospace"
+        primaryColor: "#1D2021"
+        primaryTextColor: "#EBDBB2"
+
+        actorBorder: "#282828"
+        actorTextColor: "#7C6F64"
+        actorLineColor: "#1D2021"
+        signalColor: "#D65D0E"
+        signalTextColor: "#EBDBB2"
+        labelBoxBkgColor: "#1D2021"
+        labelBoxBorderColor: "#D79921"
+        labelTextColor: "#D65D0E"
+        loopTextColor: "#D79921"
+        activationBorderColor: "#1D2021"
+        activationBkgColor: "#D79921"
+        sequenceNumberColor: "#000000"
+
+---
+
+sequenceDiagram
+    title Order Saga
+    autonumber
+
+    box rgb(40, 40, 40) Create Order
+        participant A1 as Order Placed
+        participant A0 as Order Canceled
+        participant A2 as Confirmed Product Availability
+        participant A3 as Confirmed Sales Area
+    end
+    box rgb(40, 40, 40) Payment
+        participant B1 as Payment Requested
+        participant B3 as Payment Not Received
+        participant B4 as Payment Not Received After 3 Reminders
+        participant B7 as Payment Request Reminded
+        participant B2 as Payment Received
+        participant B5 as Payment Confirmed
+        participant B6 as Payment Repaid To Customer
+    end
+    box rgb(40, 40, 40) Shipment
+        participant C1 as Shipment Scheduled
+        participant C2 as Shipment Delayed
+        participant C3 as Shipment In Transit
+        participant C4 as Shipment Delivered
+        participant C5 as Shipment Failed
+    end
+    box rgb(40, 40, 40) Notification
+        participant D0  as Notified Customer of Order Canceled
+        participant D1  as Notified Customer of Product Unavailable
+        participant D2  as Notified Customer of Sales Area Unavailable
+        participant D3  as Notified Customer of Shipment Delayed 
+        participant D4  as Notified Customer of Shipment In Transit
+        participant D5  as Notified Customer of Shipment Delivered
+        participant D6  as Notified Customer of Shipment Failed 
+        participant D7  as Notified Customer of Repaid Payment 
+        participant D8  as Notified Customer of Payment Requested 
+        participant D9  as Notified Customer of Payment Reminder
+        participant D10 as Notified Customer of Repayment Failed
+        participant D11 as Notified Security of Invalid Payment Confirmation
+    end
+    
+    A1->>A2: Confirm Product Availability
+    
+    alt
+        A1--xA2: Product Not Available
+        A1->>D1: Notify Product Not Available 
+        A1->>A0: Cancel Order
+        A0->>D0: Notify Customer of Canceled Order
+    else
+        A2->>A3: Confirm Sales Area
+    end
+
+    alt
+        A2--xA3: Sales Area Unavailable
+        A2->>D2: Notify Unavailable Sales Area
+        A2->>A0: Cancel Order
+        A0->>D0: Notify Customer of Canceled Order
+    else
+        A3->>B1: Request Payment
+    end
+
+    B1->>D8: Notify Payment Status to Customer
+
+    loop
+        B3-->B3: Payment Not Received
+
+        alt
+            B3->>B7: Remind Customer of Payment Request
+            B7->>B1: Request Payment
+            B7->>D9: Notify Payment Status to Customer
+        else
+            B4->>B5: Payment Not Received After 3 Reminders
+            B5->>A0: Cancel Order
+            A0->>D0: Notify Customer of Canceled Order
+        end
+    end
+
+    B2-->B2: Payment Received
+    B2->>B5: Confirm Payment
+
+    alt
+        B2--xB5: Invalid Payment Confirmation
+        B2->>D11: Notify Security of Invalid Payment Confirmation
+    else
+        B5->>C1: Schedule Shipment
+    end
+
+    C2-->C2: Shipment Delayed
+    C2->>D3: Notify Shipment Status to Customer
+
+    C3-->C3: Shipment In Transit
+    C3->>D4: Notify Shipment Status to Customer
+
+    C4-->C4: Shipment Delivered
+    C4->>D5: Notify Shipment Status to Customer
+
+    C5-->C5: Shipment Failed
+    C5->>D6: Notify Shipment Status to Customer
+    
+    C5->>B6: Repay Customer
+
+    alt
+        C5--xB6: Failed to Repay Customer
+
+        loop
+            C5->>B6: Retry to Repay Customer
+            C5->>D7: Notify Payment Status
+        end
+    else
+        B6->>D10: Notify Payment Status to Customer
+    end
