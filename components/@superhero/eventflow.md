@@ -1,5 +1,5 @@
 
-# [Component Documentation](/5.components.md)
+# [Component Documentation](/5-components.md)
 
 ## @superhero/eventflow
 
