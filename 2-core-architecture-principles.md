@@ -208,9 +208,13 @@ Interactions between contexts use an **Anti-Corruption Layer** implementing cont
 ---
 
 - **Anti-Corruption Layer:** Asserts adapted data integrity.
+- **Atomic:** All operations in a transaction succeed or none do. If any part fails, the entire transaction is rolled back, leaving the system unchanged.
 - **Context-Mapper:** Translates data structures, implements guards against data corruption, such as external domain inconsistencies, or unintended data formats, and converts inconsistencies into domain expected representations, by returning or throwing the translated data representation.
-- **DTO:** Stands for "Data Transfer Object", it's a naming convention of an unspecific data structure in transit; unknown to the domain.
+- **DTO:** Stands for **"Data Transfer Object"**, it's a naming convention of an unspecific data structure in transit; unknown to the domain.
 - **Gateway:** The implemented client of the transit protocol used to communicate with the subdomain - the external bounded-context.
+- **Guard:** Used in this context to describe the validation process of the downstream response in the write model. It ensures the result aligns with the domain’s expectations before allowing the process to proceed, protecting against unexpected states.
+- **Query:** A structured domain model used to express a read operation; independent of the underlying data-layer implementation.
+- **Upstream/Downstream:** Describes the interaction flow in relation to the domain - upstream flows into the domain, downstream flows away from the domain.
 
 ---
 
