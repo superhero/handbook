@@ -114,7 +114,15 @@ A **bounded-context** encapsulates a consistent domain model, language, and beha
 
 #### Aggregate
 
-An **aggregate** organizes domain **entities** and **value objects** hierarchically around an **aggregate root**, enforcing domain policies and consistency.
+An **aggregate** organizes domain **entities** and **value objects** hierarchically around an **aggregate root**, enforcing domain policies and consistency to preserve integrity.
+
+The **aggregate root** is an entity that defines the **aggregate** context that external layers always should use when altering the state of the data strcuture.
+
+- **Controls access to modification:** Changes to the state must go through the aggregate.
+- **Ensures that all modifications respect business policies:** Enforces domain rules to data mutation.
+- **Defines the boundaries for persistence and concurrency:** Loaded and persisted as a consistent, transactional unit - all or nothing.
+
+_**OBS!** An aggregate should not know of, or reference another aggregate. Modifying two aggregates at once violates the **Single Transactional Boundary Rule**. Aggregates are meant to be modified independently._
 
 ---
 
@@ -130,9 +138,12 @@ A **Value Object** represents a descriptive aspect of the domain with no concept
 
 ---
 
-#### Event
+#### Repository
 
-An **event** is expected to describe something that has happened, not the intention to do something.
+A **Repository** abstracts the **data layer**, acting as the **Anti-Corruption Layer** between the **domain** model and **downstream infrastructure**.
+
+- **Read model:** Returns a fully instantiated **Aggregate**, not standalone **Entities** or **Value Objects**.
+- **Write model:** Accepts an **Aggregate** instance and is responsible for persisting it atomically as a consistent transaction.
 
 ---
 
