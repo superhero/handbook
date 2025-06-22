@@ -34,15 +34,18 @@ The architecture promoted by the standards on this page is centered around compo
 
 ## Versioning Strategy
 
-Each package in the tool chain follows **semantic versioning** (`MAJOR.MINOR.PATCH`). Version 4 introduces `MAJOR` breaking changes from earlier versions and establishes a new stable baseline:
+Each package in the tool chain follows **semantic versioning** (`MAJOR.MINOR.PATCH`). 
+
+Version 4 introduces `MAJOR` breaking changes from earlier versions and establishes a new generation of the Tool-Chain:
 
 - All v4 packages are `>= 4.0.0`.
-- Deprecated v3 components (e.g., Eventsource, Redis integration) have been replaced or removed.
+- Deprecated v3 components has been replaced or removed.
 - Each v4 package includes a `README.md` and a test suite for reference and verification.
 
-Packages are updated independently but respect structural contracts and architectural boundaries. Internal dependencies are minimized; each component is designed according to a **composition over abstraction** policy.
+Packages are not updated independently, each version of the Tool-Chain publishes a new version of all packages. The reason is to align the version number between all packages of the Tool-Chain to make it easier to know which versions are aligned.
 
 ### Stability and Update Expectations
 
-Breaking changes or new functionality are introduced in `MINOR` version bumps.
-`PATCH` versions are expected to remain fully backward-compatible.
+- `PATCH` versions resolves bugs, and are expected to remain fully backward-compatible.
+- `MINOR` version bumps introduces breaking changes, or new functionality.
+- `MAJOR` version bumps are reserved for generational changes.
