@@ -84,7 +84,7 @@ Exposes a component-based HTTP server with middleware support. Designed for runn
 
 ### @superhero/http-server-using-oas
 
-###### [@superhero/http-server](https://github.com/superhero/http-server-using-oas)
+###### [@superhero/http-server-using-oas](https://github.com/superhero/http-server-using-oas)
 
 Adapts the `@superhero/oas` to the `@superhero/http-server` to provide the ability to route using the **OpenAPI Specification**. The adaption uses the specification to conform the request body and asserts the response of the dispatcher to match the expected result.
 
