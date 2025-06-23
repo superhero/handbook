@@ -1,47 +1,54 @@
 ## Use Cases
 
-> TODO! to show use cases with code examples.
-
 ---
 
-### 1. Basic HTTP Ping-Pong Server
+### 1. Ping-Pong: Basic HTTP Server
 
 - **Overview**: Demonstrates setting up a basic HTTP server that responds to requests with a simple message.
 - **Problem Spec**: Implement a lightweight HTTP server with minimal functionality as an entry point for learning the Tool Chain.
 - **Solution**:
 
-- Use @superhero/http-server to set up and start the server.
+- Uses `@superhero/http-server` to set up and start the server.
 - Implement the ping-pong response logic in the controller.
 - Include a testing suite demonstrating end-to-end request-response handling.
 
+[Read the use case documentation](/use-cases/1-ping-pong.md)
+
 ---
 
-### 2. HTTP Eventual Consistency and Process Management
+### 2. Message Board: Eventual Consistency and Process Management
 
-- **Overview**: Expands the HTTP server to manage processes asynchronously, ensuring eventual consistency.
-- **Problem Spec**: Handle a domain-specific process triggered by an incoming request, including asynchronous upstream calls and event-logging.
+- **Overview**: HTTP server that hosts a smaller and simplified eventual consistency solution.
+- **Problem Spec**: Handles domain-specific processes triggered by API requests; including asynchronous controllers and downstream event-logging.
 - **Solution**:
 
-- Use `@superhero/core` to organize the solution and manage processes across CPU clusters.
-- Call multiple upstream services to validate their state.
-- Log the results in `@superhero/eventflow` for persistence.
-- Aggregate results and return the final state to the requesting client.
+- Uses `@superhero/core` to organize the solution.
+- Uses `@superhero/eventflow` for persistence.
+- Aggregate results and returns data state to the requesting client.
+
+[Read the use case documentation](/use-cases/2-message-board.md)
 
 ---
 
-### 3. Bootstrap Subscription to Docker Monitoring Stream
+### 3. Sale Order: Eventual Consistency and Process Management
 
-- **Overview**: Demonstrates setting up a subscription to a Docker state monitoring API during the bootstrap phase.
-- **Problem Spec**: Show how to initialize subscriptions dynamically during application startup.
+- **Overview**: Demonstrates setting up a sale order fulfillment process.
+- **Problem Spec**: Shows a comprehensive event-driven choreography.
 - **Solution**:
 
-- Use `@superhero/bootstrap` to manage initialization logic.
-- Set up a persistent subscription to the Docker monitoring stream.
-- Handle and log incoming stream updates with @superhero/eventflow.
+- Uses `@superhero/core` to organize the solution, and to manage processes across a CPU cluster.
+- Uses `@superhero/eventflow` for persistence.
+- Uses `@superhero/bootstrap` to manage initialization logic.
+
+[Read the use case documentation](/use-cases/3-sale-order.md)
 
 ---
 
-### 4. Authorizing User Requests with Session and Signature
+### TODO ...
+
+---
+
+### 4. TODO: Authorizing User Requests with Session and Signature
 
 - **Overview**: Implements a user authentication flow using session IDs and signatures.
 - **Problem Spec**: Validate user sessions securely and log user activities during requests.
@@ -53,7 +60,7 @@
 
 ---
 
-### 5. Subscribing to Changes in the Eventlog
+### 5. TODO: Subscribing to Changes in the Eventlog
 
 - **Overview**: Demonstrates a real-time subscription to changes in the eventlog.
 - **Problem Spec**: Allow clients to receive updates whenever a new event is logged.

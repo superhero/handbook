@@ -235,7 +235,7 @@ This model aligns with the **ubiquitous-language** of the domain, expressing the
 
 #### Use-Case Examples
 
-- [**Basic HTTP Ping-Pong Server: File Structure**](/use-cases/1-basic-http-ping-pong-server.md#file-structure)
+- [**Ping-Pong: File Structure**](/use-cases/1-ping-pong.md#file-structure)
 - [**Message Board: File Structure**](/use-cases/2-message-board.md#file-structure)
 
 ---
