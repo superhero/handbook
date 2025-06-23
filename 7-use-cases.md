@@ -2,7 +2,7 @@
 
 ---
 
-### 1. Ping-Pong: Basic HTTP Server
+### 1. [Ping-Pong: Basic HTTP Server](/use-cases/1-ping-pong.md)
 
 - **Overview**: Demonstrates setting up a basic HTTP server that responds to requests with a simple message.
 - **Problem Spec**: Implement a lightweight HTTP server with minimal functionality as an entry point for learning the Tool Chain.
@@ -11,11 +11,9 @@
   - Implement the ping-pong response logic in the controller.
   - Include a testing suite demonstrating end-to-end request-response handling.
 
-[Read Documentation](/use-cases/1-ping-pong.md)
-
 ---
 
-### 2. Message Board: Eventual Consistency and Process Management
+### 2. [Message Board: Eventual Consistency and Process Management](/use-cases/2-message-board.md)
 
 - **Overview**: HTTP server that hosts a smaller and simplified eventual consistency solution.
 - **Problem Spec**: Handles domain-specific processes triggered by API requests; including asynchronous controllers and downstream event-logging.
@@ -24,11 +22,9 @@
   - Uses `@superhero/eventflow` for persistence.
   - Aggregate results and returns data state to the requesting client.
 
-[Read Documentation](/use-cases/2-message-board.md)
-
 ---
 
-### 3. Sale Order: Eventual Consistency and Process Management
+### 3. [Sale Order: Eventual Consistency and Process Management](/use-cases/3-sale-order.md)
 
 - **Overview**: Demonstrates setting up a sale order fulfillment process.
 - **Problem Spec**: Shows a comprehensive event-driven choreography.
@@ -36,8 +32,6 @@
   - Uses `@superhero/core` to organize the solution, and to manage processes across a CPU cluster.
   - Uses `@superhero/eventflow` for persistence.
   - Uses `@superhero/bootstrap` to manage initialization logic.
-
-[Read Documentation](/use-cases/3-sale-order.md)
 
 ---
 
