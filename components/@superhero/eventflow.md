@@ -1,7 +1,6 @@
+# @superhero/eventflow
 
-# [Component Documentation](/5-components.md)
-
-## @superhero/eventflow
+###### [Component Documentation](/5-components.md)
 
 The Eventflow component is designed as a message queue, process and event manager. To describe a high level overview of the Eventflow solution; it's composed by one part hub - the event hub, and one part spoke - the client, where each client is used by a service that publishes events that other services, or replications of the same service, reacts to.
 
