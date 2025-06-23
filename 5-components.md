@@ -48,7 +48,12 @@ Includes deep manipulation functions for nested objects—such as merging, cloni
 
 ### [Eventflow](/components/@superhero/eventflow.md)
 
-A message queue solution, designed to manage events and eventlogs. The model is also built to help developers support eventsource behaviour in the solutions they base the model on.
+A message queue solution, designed to manage events and event-logs, and to help developers support event source behaviour in the solution they implement.
+
+This component is seperated into sub-packages, where the two main packages are:
+
+- [**Client:** @superhero/eventflow-spoke](/components/@superhero/eventflow.md/#superheroeventflow-spoke)
+- [**Server:** @superhero/eventflow-hub](/components/@superhero/eventflow.md/#superheroeventflow-hub)
 
 ---
 

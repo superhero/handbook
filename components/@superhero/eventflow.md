@@ -7,10 +7,10 @@ The Eventflow component is designed as a message queue, process and event manage
 
 The Eventflow ecosystem is composed by a set of direct sub components:
 
-- [@superhero/eventflow-certificates](#superhero-eventflow-certificates)
-- [@superhero/eventflow-db](#superhero-eventflow-db)
-- [@superhero/eventflow-hub](#superhero-eventflow-hub)
-- [@superhero/eventflow-spoke](#superhero-eventflow-spoke)
+- [@superhero/eventflow-certificates](#superheroeventflow-certificates)
+- [@superhero/eventflow-db](#superheroeventflow-db)
+- [@superhero/eventflow-hub](#superheroeventflow-hub)
+- [@superhero/eventflow-spoke](#superheroeventflow-spoke)
 
 ---
 
