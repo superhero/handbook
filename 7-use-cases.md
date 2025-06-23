@@ -5,7 +5,7 @@
 ### 1. [Ping-Pong: Basic HTTP Server](/use-cases/1-ping-pong.md)
 
 - **Overview**: Demonstrates setting up a basic HTTP server that responds to requests with a simple message.
-- **Problem Spec**: Implement a lightweight HTTP server with minimal functionality as an entry point for learning the Tool Chain.
+- **Problem Spec**: Implement a lightweight HTTP server with minimal functionality as an entry point for learning the Tool-Chain.
 - **Solution**:
   - Uses `@superhero/http-server` to set up and start the server.
   - Implement the ping-pong response logic in the controller.

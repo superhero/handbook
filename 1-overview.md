@@ -1,4 +1,4 @@
-# Superhero Tool Chain
+# Superhero Tool-Chain
 
 - [Purpose of the Tool Chain](#purpose-of-the-tool-chain)
 - [Architectural Direction](#architectural-direction)
@@ -6,15 +6,15 @@
 
 ---
 
-## Purpose of the Tool Chain
+## Purpose of the Tool-Chain
 
-The **Superhero Tool Chain** is a modular, event-driven Node.js tool chain designed to build scalable and maintainable systems. Released version 4 introduces a refined stack focused on component isolation, offering a robust backbone solution that can be used as an event hub or message queue in a choreographed **Eventflow** system.
+The **Superhero Tool-Chain** is a modular, event-driven Node.js tool-chain designed to build scalable and maintainable systems. Released version 4 introduces a refined stack focused on component isolation, offering a robust backbone solution that can be used as an event hub or message queue in a choreographed **Eventflow** system.
 
-- The tool chain consists of packages under the `@superhero/*` namespace.
+- The Tool-Chain consists of packages under the `@superhero/*` namespace.
 - A strict, documented structure promotes clarity, repeatability, and automation.
 - Communication between systems is handled using secure and distributed event-driven solutions.
 
-The tool chain is specifically focused on enabling **load distribution** through an **eventual consistency** model well-suited for backend services in a clustered microservice orchestration.
+The Tool-Chain is specifically focused on enabling **load distribution** through an **eventual consistency** model well-suited for backend services in a clustered microservice orchestration.
 
 - [Component Documentation](/5-components.md)
 
@@ -22,7 +22,7 @@ The tool chain is specifically focused on enabling **load distribution** through
 
 ## Architectural Direction
 
-The **Superhero Tool Chain** is designed to align with defined standards inspired by **Domain-Driven Design** and other well-defined architectural principles.
+The **Superhero Tool-Chain** is designed to align with defined standards inspired by **Domain-Driven Design** and other well-defined architectural principles.
 
 The intent is to provide a spectrum of small and large library components, frameworks, and standards that help developers and teams implement an observable process design using a seamless built-in **load distribution** model.
 
@@ -34,7 +34,7 @@ The architecture promoted by the standards on this page is centered around compo
 
 ## Versioning Strategy
 
-Each package in the tool chain follows **semantic versioning** (`MAJOR.MINOR.PATCH`). 
+Each package in the Tool-Chain follows **semantic versioning** (`MAJOR.MINOR.PATCH`). 
 
 Version 4 introduces `MAJOR` breaking changes from earlier versions and establishes a new generation of the Tool-Chain:
 
