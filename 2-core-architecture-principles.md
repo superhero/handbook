@@ -36,18 +36,31 @@ The adapter-pattern described implements the **Dependency Inversion Principle** 
 
 ## Layered Architecture
 
-A Layered Architecture organizes a system into hierarchical layers, each with distinct roles and responsibilities.
+A layered architecture organizes a system into hierarchical boundaries, each with distinct roles and responsibilities.
 
-- **Separation of concerns:** Each layer addresses specific responsibilities.
+- **Separation of concerns:** Each layer is a boundary that addresses specific responsibilities.
 - **Direction of dependencies:** Higher layers depend only on lower layers, never vice versa.
-- **Dependency inversion:** Domain and application layers define interfaces, implemented by the infrastructure layer.
+- **Dependency inversion:** Lower layers define interfaces, implemented by the higher layers.
 
 ---
 
+- [Model-View-Controller (MVC)](#model-view-controller-mvc)
 - [Onion Architecture](#onion-architecture)
 - [Hexagonal Architecture (Ports & Adapters)](#hexagonal-architecture-ports--adapters)
 - [Domain-Driven Design (DDD)](#domain-driven-design-ddd)
 - [CQRS](#cqrs)
+
+---
+
+### Model-View-Controller (MVC)
+
+> Separates responsibilities between business logic, user interface, and input management!
+
+The **MVC** pattern structures three distinct component: **Model**, **View**, and **Controller**. This separation defines a basic understanding of boundaries between different layers. It's a basic pattern that further aligns well with the deeper architectual designs referenced on this page.
+
+* **Model:** Manages business logic and data state.
+* **View:** Presents data and interfaces to the user.
+* **Controller:** Processes user input and coordinates changes between the Model and View. 
 
 ---
 
