@@ -354,7 +354,7 @@ The **event-log** belongs to a **bounded-context**, a **composite event-log** is
 
 The term **composite event-log** emphasizes that the log is not from a single source, but constructed from several sources - possibly filtered or correlated.
 
-#### Use-Case Exampl
+#### Use-Case Example
 
 - [**Sale Order: Event-Log Composite**](/use-cases/3-sale-order.md#example-event-log-composite)
 
