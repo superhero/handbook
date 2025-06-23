@@ -48,7 +48,7 @@ A layered architecture organizes a system into hierarchical boundaries, each wit
 - [Onion Architecture](#onion-architecture)
 - [Hexagonal Architecture (Ports & Adapters)](#hexagonal-architecture-ports--adapters)
 - [Domain-Driven Design (DDD)](#domain-driven-design-ddd)
-- [CQRS](#cqrs)
+- [Command Query Responsibility Segregation (CQRS)](#command-query-responsibility-segregation-cqrs)
 
 ---
 
@@ -58,9 +58,14 @@ A layered architecture organizes a system into hierarchical boundaries, each wit
 
 The **MVC** pattern structures three distinct component: **Model**, **View**, and **Controller**. This separation defines a basic understanding of boundaries between different layers. It's a basic pattern that further aligns well with the deeper architectual designs referenced on this page.
 
-* **Model:** Manages business logic and data state.
-* **View:** Presents data and interfaces to the user.
-* **Controller:** Processes user input and coordinates changes between the Model and View. 
+- **Model:** Manages business logic and data state.
+- **View:** Presents data and interfaces to the user.
+- **Controller:** Processes user input and coordinates changes between the Model and View.
+
+#### Learn More
+
+- [**Martin Fowler:** Model View Controller](https://martinfowler.com/eaaCatalog/modelViewController.html)
+- [**Wikipedia:** Model-view-controller](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)
 
 ---
 
@@ -73,6 +78,14 @@ In **Onion Architecture**, the core domain model is at the center, surrounded by
 - Decouples business logic from infrastructure specifics.
 - Each layer evolves independently.
 - Changes in external systems has less impact on core behavior.
+
+#### Learn More
+
+- [**Jeffrey Palermo:** The Onion Architecture : Part 1](https://jeffreypalermo.com/2008/07/the-onion-architecture-part-1/)
+- [**Jeffrey Palermo:** The Onion Architecture : Part 2](https://jeffreypalermo.com/2008/07/the-onion-architecture-part-2/)
+- [**Jeffrey Palermo:** The Onion Architecture : Part 3](https://jeffreypalermo.com/2008/08/the-onion-architecture-part-3/)
+- [**Jeffrey Palermo:** The Onion Architecture : Part 4 - After Four Years](https://jeffreypalermo.com/2013/08/onion-architecture-part-4-after-four-years/)
+- [**YouTube:** Onion Architecture | Programming with Palermo (Clear Measure)](https://www.youtube.com/watch?v=nFU-L7QdS78)
 
 ---
 
@@ -88,6 +101,15 @@ Adapters commonly implement:
 - Repositories interacting with data layers.
 - Controllers and middleware.
 
+#### Learn More
+
+- [**Alistair Cockburn:** Hexagonal architecture the original 2005 article](https://alistair.cockburn.us/hexagonal-architecture)
+- [**Alistair Cockburn:** Hexagonal Architecture (Ports & Adapters) The 2023 version (PDF)](https://alistaircockburn.com/Hexagonal%20Budapest%2023-05-18.pdf)
+- [**Alistair Cockburn:** How the Ports & Adapters architecture simplifies your life (PDF)](https://alistaircockburn.com/hexarch%20v1.1b%20DIFFS%2020250420-1012%20paper+epub.docx.pdf)
+- [**Wikipedia:** Hexagonal architecture (software)](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software))
+- [**YouTube:** Hexagonal Architecture (Alistair Cockburn) (Tech Excellence)](https://www.youtube.com/watch?v=k0ykTxw7s0Y)
+- [**YouTube:** Hexagonal Architecture with Alistair Cockburn (Miami Java User Group)](https://www.youtube.com/watch?v=V63A-xjAeoo)
+
 ---
 
 ### Domain-Driven Design (DDD)
@@ -98,6 +120,18 @@ The architectural principles described originate from **Domain-Driven Design**, 
 
 - The **domain experts** are one or many, with practical experience, preferably a stakeholder in the solution.
 - The **ubiquitous-language** is derived from the domain and the **domain experts**, not invented by engineers.
+
+#### Learn More
+
+- [**Martin Fowler:** Bounded Context](https://martinfowler.com/bliki/BoundedContext.html)
+- [**Martin Fowler:** DDD Aggregate](https://martinfowler.com/bliki/DDD_Aggregate.html)
+- [**Martin Fowler:** Domain-driven design](https://martinfowler.com/bliki/DomainDrivenDesign.html)
+- [**Martin Fowler:** Evans Classification](https://martinfowler.com/bliki/EvansClassification.html)
+- [**Martin Fowler:** Value Object](https://martinfowler.com/bliki/ValueObject.html)
+- [**Wikipedia:** Domain-driven design](https://en.wikipedia.org/wiki/Domain-driven_design)
+- [**YouTube:** Bounded Contexts - Eric Evans - DDD Europe 2020 (Domain-Driven Design Europe)](https://www.youtube.com/watch?v=am-HXycfalo)
+- [**YouTube:** Eric Evans - Tackling Complexity in the Heart of Software (Domain-Driven Design Europe)](https://www.youtube.com/watch?v=dnUFEg68ESM)
+- [**YouTube:** What is DDD - Eric Evans - DDD Europe 2019 (Domain-Driven Design Europe)](https://www.youtube.com/watch?v=pMuiVlnGqjk)
 
 ---
 
@@ -160,14 +194,20 @@ A **Repository** abstracts the **data layer**, acting as the **Anti-Corruption L
 
 ---
 
-### CQRS
+### Command Query Responsibility Segregation (CQRS)
 
-> Command Query Responsibility Segregation!
+> Separate the read and write models!
 
-Inspired by Greg Young’s principles, the stack promotes a clear separation between read and write models:
+Inspired by a "command query separation" principle, this page promotes a model design that separation between read and write:
 
 - **Commands:** Trigger state changes and emit events, _e.g., the write model_.
 - **Queries:** Optimized projections for reading, _e.g., the read model_.
+
+#### Learn More
+
+- [**Martin Fowler:** Command Query Separation](https://www.martinfowler.com/bliki/CommandQuerySeparation.html)
+- [**Martin Fowler:** CQRS](https://martinfowler.com/bliki/CQRS.html)
+- [**YouTube:** Greg Young - A Decade of DDD, CQRS, Event Sourcing (Domain-Driven Design Europe)](https://www.youtube.com/watch?v=LDW0QWie21s)
 
 ## Standard Operating Procedures
 
