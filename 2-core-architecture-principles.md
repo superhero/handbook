@@ -235,8 +235,8 @@ This model aligns with the **ubiquitous-language** of the domain, expressing the
 
 #### Use-Case Examples
 
-- [**Basic HTTP Ping-Pong Server**](/use-cases/1-basic-http-ping-pong-server.md#file-structure)
-- [**Message Board**](/use-cases/2-message-board.md#file-structure)
+- [**Basic HTTP Ping-Pong Server: File Structure**](/use-cases/1-basic-http-ping-pong-server.md#file-structure)
+- [**Message Board: File Structure**](/use-cases/2-message-board.md#file-structure)
 
 ---
 
@@ -280,9 +280,9 @@ The benefits of working with a solution that implements an **event-log** of each
 - **Simulation:** Can be used to simulate the future of a process, or how a similar process would evolve.
 - **Decoupling:** Downstream implementations can react to events decoupled from the broadcaster.
 
-#### Use-Case Examples
+#### Use-Case Example
 
-- [**Sale Order**](/use-cases/3-sale-order.md#example-event-log)
+- [**Sale Order: Event-Log**](/use-cases/3-sale-order.md#example-event-log)
 
 ---
 
@@ -354,9 +354,9 @@ The **event-log** belongs to a **bounded-context**, a **composite event-log** is
 
 The term **composite event-log** emphasizes that the log is not from a single source, but constructed from several sources - possibly filtered or correlated.
 
-#### Use-Case Examples
+#### Use-Case Exampl
 
-- [**Sale Order**](/use-cases/3-sale-order.md#example-event-log-composite)
+- [**Sale Order: Event-Log Composite**](/use-cases/3-sale-order.md#example-event-log-composite)
 
 ---
 
@@ -368,6 +368,6 @@ The solution design outlined here expects a write model that implements **proces
 
 The **saga** is expected to be documented using a sequence diagram and implemented in code using one, or multiple, **process managers**.
 
-#### Use-Case Examples
+#### Use-Case Example
 
-- [**Sale Order**](/use-cases/3-sale-order.md#saga)
+- [**Sale Order: Saga**](/use-cases/3-sale-order.md#saga)
