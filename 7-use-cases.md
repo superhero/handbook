@@ -12,7 +12,7 @@
 - Implement the ping-pong response logic in the controller.
 - Include a testing suite demonstrating end-to-end request-response handling.
 
-[Read the use case documentation](/use-cases/1-ping-pong.md)
+[Read the Use Case Documentation](/use-cases/1-ping-pong.md)
 
 ---
 
@@ -26,7 +26,7 @@
 - Uses `@superhero/eventflow` for persistence.
 - Aggregate results and returns data state to the requesting client.
 
-[Read the use case documentation](/use-cases/2-message-board.md)
+[Read the Use Case Documentation](/use-cases/2-message-board.md)
 
 ---
 
@@ -40,7 +40,7 @@
 - Uses `@superhero/eventflow` for persistence.
 - Uses `@superhero/bootstrap` to manage initialization logic.
 
-[Read the use case documentation](/use-cases/3-sale-order.md)
+[Read the Use Case Documentation](/use-cases/3-sale-order.md)
 
 ---
 
