@@ -14,32 +14,24 @@ The Eventflow ecosystem is composed by a set of direct sub components:
 
 ---
 
-### @superhero/eventflow-certificates
-
-###### [@superhero/eventflow-certificates](https://github.com/superhero/eventflow-certificates)
+### [@superhero/eventflow-certificates](https://github.com/superhero/eventflow-certificates)
 
 Handles TLS certificate generation and renewal for use with the Eventflow network. This supports secure authentication between hubs and spokes through automated certificate provisioning.
 
 ---
 
-### @superhero/eventflow-db
-
-###### [@superhero/eventflow-db](https://github.com/superhero/eventflow-db)
+### [@superhero/eventflow-db](https://github.com/superhero/eventflow-db)
 
 Implements the durable event storage backend for the Eventflow system using SQL (e.g. MySQL). It maintains the canonical log of domain events, supporting versioning, replay, and projection recovery.
 
 ---
 
-### @superhero/eventflow-hub
-
-###### [@superhero/eventflow-hub](https://github.com/superhero/eventflow-hub)
+### [@superhero/eventflow-hub](https://github.com/superhero/eventflow-hub)
 
 Acts as the central message broker in the Eventflow system. It receives events from spokes, schedules them, and persists them into the eventflow-db. Supports secure multi-spoke connectivity.
 
 ---
 
-### @superhero/eventflow-spoke
-
-###### [@superhero/eventflow-spoke](https://github.com/superhero/eventflow-spoke)
+### [@superhero/eventflow-spoke](https://github.com/superhero/eventflow-spoke)
 
 A client component that connects to an Eventflow Hub over TLS, allowing services to publish, consume, and subscribe to events in a decoupled fashion. Represents a service's "spoke" in the hub-and-spoke topology.
