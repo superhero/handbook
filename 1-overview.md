@@ -14,7 +14,9 @@ The **Superhero Tool-Chain** is a modular, event-driven Node.js tool-chain desig
 - A strict, documented structure promotes clarity, repeatability, and automation.
 - Communication between systems is handled using secure and distributed event-driven solutions.
 
-The Tool-Chain is specifically focused on enabling **load distribution** through an **eventual consistency** model well-suited for backend services in a clustered microservice orchestration. Read the [component documentation](/5-components.md) to learn more about the different components of the Tool-Chain, and what they are…
+The Tool-Chain is specifically focused on enabling **load distribution** through an **eventual consistency** model well-suited for backend services in a clustered microservice orchestration. 
+
+Read the [listed components documentations](/5-components.md) to learn more about them, the different components of the Tool-Chain, and what they are…
 
 ---
 
@@ -24,7 +26,7 @@ The **Superhero Tool-Chain** is designed to align with defined standards inspire
 
 The intent is to provide a spectrum of small and large library components, frameworks, and standards that help developers and teams implement an observable process design using a seamless built-in **load distribution** model.
 
-The architecture promoted by the standards on this page is centered around component isolation, logical and layered boundaries with an expected dependency direction. Learn more by reading the [core architecture principles](/2-core-architecture-principles.md).
+The architecture promoted by the standards on this page is centered around component isolation, logical and layered boundaries with an expected dependency direction. Learn more from reading the [core architecture principles](/2-core-architecture-principles.md).
 
 ---
 
