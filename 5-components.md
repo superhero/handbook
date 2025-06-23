@@ -52,8 +52,8 @@ A message queue solution, designed to manage events and event-logs, and to help 
 
 This component is seperated into sub-packages, where the two main packages are:
 
-- **`Client`:** [@superhero/eventflow-spoke](/components/@superhero/eventflow.md/#superheroeventflow-spoke)
-- **`Server`:** [@superhero/eventflow-hub](/components/@superhero/eventflow.md/#superheroeventflow-hub)
+- **`Client`** [@superhero/eventflow-spoke](/components/@superhero/eventflow.md/#superheroeventflow-spoke)
+- **`Server`** [@superhero/eventflow-hub](/components/@superhero/eventflow.md/#superheroeventflow-hub)
 
 ---
 
