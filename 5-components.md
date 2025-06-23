@@ -125,4 +125,4 @@ A low level TCP socket channel module that handles persistent connections with r
 
 ### [@superhero/wild-trie](https://github.com/superhero/wild-trie)
 
-A Trie (DAG - Directed Acyclic Graph) data-structure implementation with wildcard support for graph path pattern matching. A lower level solution that can be used to model and navigate different tree structures.
+A Trie is a directed graph data-structure implementation with wildcard support for graph path pattern matching. A lower level solution that can be used to model and navigate different tree structures.
