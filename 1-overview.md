@@ -16,7 +16,7 @@ The **Superhero Tool-Chain** is a modular, event-driven Node.js tool-chain desig
 
 The Tool-Chain is specifically focused on enabling **load distribution** through an **eventual consistency** model well-suited for backend services in a clustered microservice orchestration. 
 
-Read the [components documentations](/5-components.md) list to learn more about them, the different components of the Tool-Chain, and what they are…
+Read the [components documentations](/5-components.md) list to learn more about them; the different components of the Tool-Chain, and what they are…
 
 ---
 
