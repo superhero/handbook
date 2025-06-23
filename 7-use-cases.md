@@ -1,6 +1,6 @@
 # Use Cases
 
-Work in progress to document different use cases that are solved by implementing the Tool-chain to accomplish a solution to the domain problem.
+**Work in progress:** Documentation of different use cases that are solved by implementing the Tool-chain, demonstrating different solutions to the listed domain problems.
 
 ---
 
