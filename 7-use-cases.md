@@ -1,5 +1,7 @@
 # Use Cases
 
+Work in progress to document different use cases that are solved by implementing the Tool-chain to accomplish a solution to the domain problem.
+
 ---
 
 ### 1. [Ping-Pong: Basic HTTP Server](/use-cases/1-ping-pong.md)
