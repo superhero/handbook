@@ -45,8 +45,9 @@ The `ping` **core domain** is a **bounded context** that defines the **use case*
 - **access.js:** Upstream contract that describes the implementation interface of the input plug.
 - **access-using-http.js:** Upstream HTTP-controllor adapter of the contracted access interface.
 - **ping-responds-with-pong.test.js:** Unit-tests of the use case following a semantical naming convention principle with a `.test.js` suffix to differentiate it from the source code of the solution.
-- **respond-with-pong.js:** Contract that describes the pluggable interface of the downstream implementation.
-- **respond-with-pong-using-http.js:** A simple downstream implementation representing the data layer.
+- **respond.js:** Contract that describes the pluggable interface of the downstream implementation.
+- **respond-with-pong.js:** A simple downstream implementation representing the data layer.
+- **respond-with-pong-using-http.js:** Application service that orchestrates the use case by connecting the implemented upstream and downstream adapters.
 - **route.json:** Specification using the OpenAPI standards to describe the http route of the endpoint.
 
 The `http-server` defines a different **bounded context** with the `listen` **use case** that dosn't have any defined **plugs**, only the **application service** that starts the server, and a **test case** that the server is listening.
@@ -170,7 +171,7 @@ export default class StartServer
 }
 ```
 
-**`/ping-pong/ping/response/respond-with-pong-using-http.js`:** Solves the domain problem of responding to a ping request with an injected response model.
+**`/ping-pong/ping/response/respond-with-pong-using-http.js`:** Solves the domain problem of orchestrating the use case of responding to a an upstream ping request with an injected downstream response model.
 
 ```js
 import AccessUsingHttp from './access-using-http.js'
@@ -226,7 +227,7 @@ Both **application services** exports a **locate** function that the **locator**
 ```js
 /**
  * @typedef {Object} Access
- * @memberof PingPong.ping.response
+ * @memberof PingPong.ping
  * @property {Respond} respond
  */
 ```
@@ -236,29 +237,30 @@ Both **application services** exports a **locate** function that the **locator**
 ```js
 /**
  * @typedef {number} sleep
- * @memberof PingPong.ping.response
- * @see PingPong.config.oas.components.schemas.sleep
+ * @memberof PingPong.ping
+ * @see {@link PingPong.config.oas.components.schemas.sleep | OAS Schema}
  */
 
 /**
  * @typedef {string} response
- * @memberof PingPong.ping.response
- * @see PingPong.config.oas.components.schemas.response
+ * @memberof PingPong.ping
+ * @see {@link PingPong.config.oas.components.schemas.response | OAS Schema}
  */
 
 /**
  * Resolver function that takes a sleep argument and returns a resolved response.
- * @callback Resolver
- * @memberof PingPong.ping.response~Respond
+ * @callback Respond~resolve
+ * @memberof PingPong.ping
  * @param {sleep} sleep - Time in ms to sleep before resolving
- * @returns {Promise<response>} response
+ * @async
+ * @returns {response} response
  */
 
 /**
  * Downstream repository that can resolve a ping query.
  * @typedef {Object} Respond
- * @memberof PingPong.ping.response
- * @property {Resolver} resolve
+ * @memberof PingPong.ping
+ * @property {Respond~resolve} resolve
  */
 ```
 

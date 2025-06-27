@@ -16,7 +16,7 @@ flowchart TB
             subgraph Infrastructure["_Infrastructure_"]
                 subgraph Controller["_Upstream Controller Adapter_"]
                     subgraph ControllerACL["_Anti-Corruption Layer_"]
-                        subgraph ControllerContextMapper[_Context Mapping_]
+                        subgraph ControllerContextMapper[_Context Mapper_]
                             subgraph UpstreamControllerContextMapper["_Upstream_"]
                                 subgraph ControllerWriteModel["_Write_"]
                                     UpstreamControllerWriteModelRequest[Request] --> ControllerCommand[Command]
