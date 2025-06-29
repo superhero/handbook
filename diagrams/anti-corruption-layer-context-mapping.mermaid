@@ -13,104 +13,94 @@ config:
 flowchart TB
     subgraph Subdomains["_Subdomains_"]
         subgraph ImplementedBoundedContext["_Bounded-Context_"]
-            subgraph Infrastructure["_Infrastructure_"]
-                subgraph Controller["_Upstream Controller Adapter_"]
-                    subgraph ControllerACL["_Anti-Corruption Layer_"]
-                        subgraph ControllerContextMapper[_Context Mapper_]
-                            subgraph UpstreamControllerContextMapper["_Upstream_"]
-                                subgraph ControllerWriteModel["_Write_"]
-                                    UpstreamControllerWriteModelRequest[Request] --> ControllerCommand[Command]
-                                end
-
-                                subgraph ControllerReadModel["_Read_"]
-                                    UpstreamControllerReadModelRequest[Request] --> ControllerQuery[Query]
-                                end
+            subgraph Controller["_Upstream_"]
+                subgraph ControllerACL["_Controller Adapter_"]
+                    subgraph ControllerContextMapper[_Anti-Corruption<br>Context Mapping_]
+                        subgraph UpstreamControllerContextMapper["_Upstream_"]
+                            subgraph ControllerWriteModel["_Write_"]
+                                UpstreamControllerWriteModelRequest[Request] --> ControllerCommand[Command]
                             end
 
-                            subgraph DownstreamControllerContextMapper["_Downstream_"]
-                                subgraph DownstreamControllerReadWriteModel["_Read & Write_"]
-                                    direction BT
-                                    DownstreamControllerSchema["Aggregate"] --> DownstreamResponse[Response]
-                                end
+                            subgraph ControllerReadModel["_Read_"]
+                                UpstreamControllerReadModelRequest[Request] --> ControllerQuery[Query]
                             end
                         end
 
-                        ControllerContextMapper <--> ControllerContract[Contract]
+                        subgraph DownstreamControllerContextMapper["_Downstream_"]
+                            subgraph DownstreamControllerReadWriteModel["_Read & Write_"]
+                                direction BT
+                                DownstreamControllerSchema["Aggregate"] --> DownstreamResponse[Response]
+                            end
+                        end
                     end
-
-                    ControllerGateway ~~~ ControllerACL
-                    ControllerGateway[Gateway] <--> ControllerACL
-                    ControllerGateway ~~~ ControllerACL
-                    ControllerGateway ~~~ ControllerACL
-                    ControllerGateway ~~~ ControllerACL
                 end
 
-                subgraph Repository["_Downstream Repository Adapter_"]
-                    subgraph RepositoryACL["_Anti-Corruption Layer_"]
-                        subgraph RepositoryContextMapper["_Context Mapper_"]
-                            subgraph RepositoryWriteModel["_Write_"]
-                                subgraph DownstreamRepositoryWriteModel["_Downstream_"]
-                                    DownstreamRepositorySchema["Aggregate"] --> WriteModelDownstreamRepositoryDTO[DTO]
-                                end
-
-                                subgraph UpstreamRepositoryWriteModel["_Upstream_"]
-                                    direction BT
-                                    UpstreamRepositoryGuard[Guard] -.-x UpstreamRepositorySchema["Error"]
-                                end
-                            end
-                                
-                            subgraph RepositoryReadModel["_Read_"]
-                                subgraph DownstreamRepositoryReadModel["_Downstream_"]
-                                    RepositoryQuery[Query] --> ReadModelDownstreamRepositoryDTO[DTO]
-                                end
-
-                                subgraph UpstreamRepositoryReadModel["_Upstream_"]
-                                    direction BT
-                                    UpstreamRepositoryReadModelDTO[DTO] --> UpstreamRepositoryReadModelSchema["Aggregate"]
-                                end
-                            end
-                        end
-
-                        subgraph RepositoryAtomic[Atomic]
-                            RepositoryAtomicTransaction[Transaction] -.-x RepositoryAtomicRollback[Rollback]
-                        end
-
-                        RepositoryContract[Contract]    <--> RepositoryContextMapper
-                        RepositoryContract              ~~~~ RepositoryContextMapper
-                        RepositoryContract              ~~~~ RepositoryContextMapper
-                        RepositoryContract              ~~~~ RepositoryContextMapper
-                        RepositoryContract              ~~~~ RepositoryContextMapper
-                        RepositoryContract              ~~~~ RepositoryContextMapper
-                        DownstreamRepositoryWriteModel  ---> RepositoryAtomic
-                    end
-
-                    RepositoryACL <--> RepositoryGateway[Gateway]
-                end
+                ControllerGateway[Inbound Gateway] <--> ControllerACL
             end
+
+            subgraph Repository["_Downstream_"]
+                subgraph RepositoryACL["_Repository Adapter_"]
+                    subgraph RepositoryContextMapper["_Anti-Corruption<br>Context Mapping_"]
+                        subgraph RepositoryWriteModel["_Write_"]
+                            subgraph DownstreamRepositoryWriteModel["_Downstream_"]
+                                DownstreamRepositorySchema["Aggregate"] --> WriteModelDownstreamRepositoryDTO[DTO]
+                            end
+
+                            subgraph UpstreamRepositoryWriteModel["_Upstream_"]
+                                direction BT
+                                UpstreamRepositoryGuard[Guard] -.-x UpstreamRepositorySchema["Error"]
+                            end
+                        end
+                            
+                        subgraph RepositoryReadModel["_Read_"]
+                            subgraph DownstreamRepositoryReadModel["_Downstream_"]
+                                RepositoryQuery[Query] --> ReadModelDownstreamRepositoryDTO[DTO]
+                            end
+
+                            subgraph UpstreamRepositoryReadModel["_Upstream_"]
+                                direction BT
+                                UpstreamRepositoryReadModelDTO[DTO] --> UpstreamRepositoryReadModelSchema["Aggregate"]
+                            end
+                        end
+                    end
+                end
+
+                RepositoryACL <--> RepositoryGateway[Outbound Gateway]
+            end
+
+            subgraph Application["_Application_"]
+                ControllerACL
+                <--> ApplicationService["Application Service"]
+                <--> RepositoryACL
+            end
+
+            Controller 
+            ~~~ Application 
+            ~~~ Repository 
         end
 
-        ControllerBoundedContext["_Bounded-Context<br>Upstream_"] <--> ControllerGateway
-        RepositoryGateway <--> RepositoryBoundedContext["_Bounded-Context<br>Downstream_"]
+        ControllerBoundedContext["_Upstream Subdomain<br>(Bounded-Context)_"] <--> ControllerGateway
+        RepositoryGateway <--> RepositoryBoundedContext["_Downstream Subdomain<br>(Bounded-Context)_"]
     end
 
-    classDef nsDepth_1 fill:#1D2021,stroke:#1D2021,color:#7C6F64
-    classDef nsDepth_2 fill:#282828,stroke:#282828,color:#7C6F64,stroke-width:6px
-    classDef nsDepth_3 fill:#3C3836,stroke:#3C3836,color:#7C6F64,stroke-width:12px
-    classDef nsDepth_4 fill:#504945,stroke:#504945,color:#1D2021
+    classDef nsDepth_1 fill:#1D2021,stroke:#1D2021,color:#7C6F64,stroke-width:8px
+    classDef nsDepth_2 fill:#282828,stroke:#282828,color:#7C6F64,stroke-width:8px
+    classDef nsDepth_3 fill:#3C3836,stroke:#3C3836,color:#7C6F64,stroke-width:8px
+    classDef nsDepth_4 fill:#504945,stroke:#504945,color:#1D2021,stroke-width:8px
     classDef nsDepth_5 fill:#665C54,stroke:#665C54,color:#1D2021,stroke-width:8px
-    classDef nsDepth_6 fill:#7C6F64,stroke:#7C6F64,color:#1D2021,stroke-width:16px
+    classDef nsDepth_6 fill:#7C6F64,stroke:#7C6F64,color:#1D2021,stroke-width:8px
+    classDef nsDepth_7 fill:#928374,stroke:#928374,color:#1D2021,stroke-width:16px
     
     classDef implementation fill:#1D2021,stroke:#282828,font-weight:bold,stroke-width:8px,color:#EBDBB2
     classDef contract fill:#EBDBB2,stroke:#A89984,font-weight:bold,stroke-width:8px,color:#665C54
 
     class Subdomains nsDepth_1
     class ImplementedBoundedContext,ControllerBoundedContext,RepositoryBoundedContext nsDepth_2
-    class Infrastructure nsDepth_3
-    class Controller,Repository nsDepth_4
-    class ControllerACL,RepositoryACL nsDepth_5
-    class ControllerContextMapper,RepositoryContextMapper,RepositoryAtomic,DownstreamControllerReadWriteModel nsDepth_6
-    class UpstreamControllerContextMapper,DownstreamControllerContextMapper,RepositoryWriteModel,RepositoryReadModel nsDepth_5
-    class ControllerWriteModel,ControllerReadModel,UpstreamRepositoryWriteModel,UpstreamRepositoryReadModel,DownstreamRepositoryReadModel,DownstreamRepositoryWriteModel nsDepth_6
+    class Controller,Application,Repository nsDepth_3
+    class ControllerACL,RepositoryACL nsDepth_4
+    class ControllerContextMapper,RepositoryContextMapper nsDepth_5
+    class UpstreamControllerContextMapper,DownstreamControllerContextMapper,RepositoryWriteModel,RepositoryReadModel nsDepth_6
+    class DownstreamControllerReadWriteModel,ControllerWriteModel,ControllerReadModel,UpstreamRepositoryWriteModel,UpstreamRepositoryReadModel,DownstreamRepositoryReadModel,DownstreamRepositoryWriteModel nsDepth_7
     
-    class RepositoryAtomicTransaction,UpstreamControllerWriteModelRequest,UpstreamControllerReadModelRequest,DownstreamResponse,ControllerQuery,RepositoryQuery,ControllerCommand,RepositoryContract,ControllerContract,UpstreamRepositoryGuard,UpstreamRepositoryReadModelDTO,UpstreamRepositorySchema,WriteModelDownstreamRepositoryDTO,ReadModelDownstreamRepositoryDTO,RepositoryAtomicRollback contract
-    class UpstreamRepositoryReadModelSchema,DownstreamRepositorySchema,DownstreamControllerSchema,RepositoryGateway,RepositoryMapper,RepositoryGuard,ControllerMapper,ControllerGateway,ControllerAdapter,RepositoryAdapter implementation
+    class UpstreamControllerWriteModelRequest,UpstreamControllerReadModelRequest,DownstreamResponse,ControllerQuery,RepositoryQuery,ControllerCommand,RepositoryContract,ControllerContract,UpstreamRepositoryGuard,UpstreamRepositoryReadModelDTO,UpstreamRepositorySchema,WriteModelDownstreamRepositoryDTO,ReadModelDownstreamRepositoryDTO contract
+    class ApplicationService,UpstreamRepositoryReadModelSchema,DownstreamRepositorySchema,DownstreamControllerSchema,RepositoryGateway,RepositoryMapper,RepositoryGuard,ControllerMapper,ControllerGateway,ControllerAdapter,RepositoryAdapter implementation

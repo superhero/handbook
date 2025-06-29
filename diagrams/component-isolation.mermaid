@@ -6,38 +6,45 @@ config:
     theme: base
     themeVariables:
         fontFamily: "monospace"
-        background: "#3C3836"
-        primaryColor: "#1D2021"
-        primaryTextColor: "#EBDBB2"
-        primaryBorderColor: "#282828"
         lineColor: "#D65D0E"
 
 ---
 
-classDiagram
-    direction TB
+flowchart TB
+    subgraph ComponentIsolation["_Component Isolation_"]
+        subgraph ImplementaionBoundary["_Boundary_"]
+            subgraph Adapter["**Adapter**"]
+                AdapterOperation["\+&nbsp;**operation**(value)::**obj**"]:::method
+            end
 
-namespace Infrastructure {
-    class Adapter {
-        + operation(value): Entity
-    }
+            subgraph Component["**Component**"]
+                ComponentPort["\+&nbsp;**port**::**Contract**"]:::method
+            end
 
-    class Component {
-        + foo(input): output
-    }
-}
+            subgraph Contract["**Contract**<br>_Interface_"]
+                ContractOperation["\+&nbsp;**operation**(value)::**obj**"]:::method
+            end
 
-namespace Application {
-    class ApplicationService {
-        - port: Contract
-    }
+            Contract --> ImplementationSchemas["_Boundary Schemas_"]:::nsDepth_3
+        end
 
-    class Contract {
-        <<Interface>>
-        + operation(value): Entity
-    }
-}
+        subgraph ExternalBoundary["_External Boundary_"]
+            subgraph ExternalService["**Service**"]
+                ExternalServiceCmd["\+&nbsp;**cmd**(in)::**out**"]:::method
+            end
 
-ApplicationService --> Contract
-Adapter ..o Contract
-Adapter --> Component
+            ExternalService:::nsDepth_3 --> ExternalSchemas["_External Schemas_"]:::nsDepth_3
+        end
+    end
+
+    Component:::nsDepth_3   ---> Contract:::nsDepth_3
+    Adapter:::nsDepth_3     -.-o Contract
+    Adapter                 ---> ExternalBoundary
+
+    classDef nsDepth_1 fill:#1D2021,stroke:#1D2021,color:#7C6F64,stroke-width:24px
+    classDef nsDepth_2 fill:#282828,stroke:#282828,color:#7C6F64,stroke-width:16px
+    classDef nsDepth_3 fill:#504945,stroke:#504945,color:#1D2021,stroke-width:4px
+    classDef method fill:#7C6F64,stroke:#7C6F64,color:#1D2021,stroke-width:27px
+
+    class ComponentIsolation nsDepth_1
+    class ImplementaionBoundary,ExternalBoundary nsDepth_2

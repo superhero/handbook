@@ -6,33 +6,32 @@
 
 ## Philosophy
 
-The architectural approach described here is inspired by, and aligns with, well-defined architectural principles in **Domain-Driven Design**, **Onion Architecture**, and **Hexagonal Architecture**, where **core business** logic is isolated at the center of the solution. Contextual boundaries are protected by relying on adapted implementations of clearly defined interfaces (**ports**).
+The architectural approach described here is inspired by, and aligns with, other already well-defined architectural principles where **core business** logic is isolated at the center of the solution. Contextual boundaries are protected by relying on adapted implementations of contracted interfaces.
 
-- **Core logic has no concrete dependencies:** Adapter-patterns enable simpler unit testing.
-- **Core logic remains stable despite infrastructural changes:** Ensures domain stability.
-- **Adapters can be swapped independently:** Simplifies refactoring.
+- **Logic should not have concrete dependencies:** Dependency Inversion Principle.
+- **Logic should not depend on what it does not use:** Interface Segregation Principle.
+- **Logic should be adaptable to different solutions:** Inversion of control improves agility.
 
 ---
 
 ### Component Isolation & Dependency Direction
 
-These standards advocate a **component isolation policy**, meaning a component must remain isolated from the problem spaces of other components, and should not address problems beyond its contextual scope.
+These standards advocate a **Component Isolation Principle**, meaning a component must remain isolated from the problem spaces of other components, and should not address problems beyond its contextual scope.
 
-- Components benefit from clearly defined boundaries and responsibilities.
-- Isolated components remain stable when coupled components change.
-- Isolated components are simpler to test individually.
-
----
-
-![Component Isolation](/diagrams/component-isolation.png)
+- Components benefit from defined boundaries that contextualizes responsibilities.
+- Components benefit from an isolated scope to remain stable by depending on adapters where changes in coupled components are addressed.
 
 ---
 
-The adapter-pattern described above ensures **component isolation**, reducing coupling by abstracting the dependency, using a contracted interface implemented by one or more adapters of different solutions to the contracted problem.
+![Component Isolation](/diagrams/component-isolation.svg)
+
+---
+
+The adapter-pattern described above ensures **component isolation**, reducing **tight coupling** by abstracting the dependency, using a contracted interface that is implemented by one or more adapters of different solutions to the contracted problem.
 
 The adapter-pattern described implements the **Dependency Inversion Principle** described by Robert C. Martin - _High-level modules should not depend on low-level modules. Both should depend on abstractions._ A principle that confronts **tight coupling**.
 
-**Tight coupling** occurs when components, modules, or classes are strongly dependent on each other's internal structure or behavior. A change in one component forces changes in others - defining instability, causes a maintenance overhead.
+**Tight coupling** occurs when components are strongly dependent on each other's internal structure or behavior. A change in one component forces changes in others - causing instability and a maintenance overhead.
 
 ## Layered Architecture
 
@@ -232,19 +231,20 @@ Software boundaries separate domain responsibilities into bounded-contexts, each
 
 _Interaction lines in the architecture express dependency and implementation strategies that show how, and in what direction - boundaries are expected to be broken._
 
-- **Infrastructure Layer:** Where upstream controllers and downstream repositories are implemented.
-- **Application Layer:** Responsible for orchestration between infrastructural implementations and the Domain layer.
-- **Domain Layer:** Implements the domain-specific business logic.
-- **Command Layer:** Write model responsible for persistence modifications in the data layer.
-- **Query Layer:** Read model responsible for projections of the data layer.
-- **Controller:** Upstream layer responsible for input adapters.
-- **Repository:** Downstream layer responsible for output implementations of cross boundary interactions.
+- **Infrastructure:** Layer where gateways, controllers and repositories are implemented.
+- **Application:** Layer responsible for coordinates of different infrastructural implementations.
+- **Domain:** Layer where the domain-specific business logic and data structures are implemented.
+- **Command:** Implements the write model that is responsible for persistence modifications in the data layer.
+- **Query:** Implements the read model that is responsible for projections of the data layer.
+- **Gateway:** A technical port that expresses a pluggable cross boundary interaction.
+- **Controller:** Upstream adapter implementations responsible for facading inbound gateways.
+- **Repository:** Downstream data layer facade responsible for outbound implementations that persists and reads aggregated data structures.
 - **Adapter:** Adapts infrastructural components to domain-specific expectations.
-- **Process Manager:** Command Layer for implementations responsible for process orchestration.
+- **Interactor:** Transactional application service that coordinates application behaviour.
+- **Process Manager:** Application service responsible for process coordination.
 - **Contract:** Interfaces that express what implementations the domain requires to be able to fulfill the domain-specific business logic.
-- **Saga:** Process managers that orchestrates domain-specific reactions to domain events.
 - **Aggregate:** Implements the domain-specific atomic business logic that guarantees business policies within the contextual boundary.
-- **Schema:** Responsible for ensuring data integrity of the data representations it specify.
+- **Schema:** Useful to help ensure data integrity of the data representations it specify.
 - **Entity:** A persistent domain object with a unique identity, governed by its aggregate root.
 - **Value Object:** A domain object without identity, defined by the value of its attribute(s), often typically used to represent attributes of an Entity.
 
@@ -260,9 +260,9 @@ Interactions between contexts use an **Anti-Corruption Layer** implementing cont
 
 ---
 
-- **Anti-Corruption Layer:** Asserts adapted data integrity.
-- **Atomic:** All operations in a transaction succeed or none do. If any part fails, the entire transaction is rolled back, leaving the system unchanged.
-- **Context-Mapper:** Translates data structures, implements guards against data corruption, such as external domain inconsistencies, or unintended data formats, and converts inconsistencies into domain expected representations, by returning or throwing the translated data representation.
+- **Aggregate:** Responsible for domain speific policies to preserve the **Entities** consistency.
+- **Anti-Corruption:** Layer that asserts adapted data integrity.
+- **Context-Mapping:** Translates data structures, implements guards against data corruption, such as external domain inconsistencies, or unintended data formats, and converts inconsistencies into domain expected representations, by returning or throwing the translated data representation.
 - **DTO:** Stands for **"Data Transfer Object"**, it's a naming convention of an unspecific data structure in transit; unknown to the domain.
 - **Gateway:** The implemented client of the transit protocol used to communicate with the subdomain - the external bounded-context.
 - **Guard:** Used in this context to describe the validation process of the downstream response in the write model. It ensures the result aligns with the domain’s expectations before allowing the process to proceed, protecting against unexpected states.
